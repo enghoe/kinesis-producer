@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class KinesisProducer {
 
-    static final String          endpoint = "kinesis.us-east-1.amazonaws.com";
+    static final String endpoint = "kinesis.us-east-1.amazonaws.com";
     static final String serviceName = "kinesis";
     static final String streamName = "game_rating_stream";
 
@@ -47,18 +47,18 @@ public class KinesisProducer {
     }
 
     public void putRecords() throws JsonProcessingException {
-        PutRecordsRequest putRecordsRequest  = new PutRecordsRequest();
+        PutRecordsRequest putRecordsRequest = new PutRecordsRequest();
         putRecordsRequest.setStreamName(streamName);
-        List <PutRecordsRequestEntry> putRecordsRequestEntryList  = new ArrayList<>();
+        List<PutRecordsRequestEntry> putRecordsRequestEntryList = new ArrayList<>();
 
         Random random = new Random(2377917);
 
         for (int i = 0; i < 100; i++) {
-            PutRecordsRequestEntry putRecordsRequestEntry  = new PutRecordsRequestEntry();
+            PutRecordsRequestEntry putRecordsRequestEntry = new PutRecordsRequestEntry();
             GameRating gameRating = new GameRating();
-            gameRating.id = random.nextInt(10) + 1;
+            gameRating.deviceId = random.nextInt(10) + 1;
             gameRating.rating = random.nextInt(2);
-            gameRating.gameTitle = "test";
+            gameRating.gameTitle = "game" + (random.nextInt(4) + 1);
             //gameRating.timeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
             ObjectMapper mapper = new ObjectMapper();
             putRecordsRequestEntry.setData(ByteBuffer.wrap(mapper.writeValueAsString(gameRating).getBytes()));
@@ -67,7 +67,7 @@ public class KinesisProducer {
         }
 
         putRecordsRequest.setRecords(putRecordsRequestEntryList);
-        PutRecordsResult putRecordsResult  = client.putRecords(putRecordsRequest);
+        PutRecordsResult putRecordsResult = client.putRecords(putRecordsRequest);
         System.out.println("Put Result" + putRecordsResult);
     }
 

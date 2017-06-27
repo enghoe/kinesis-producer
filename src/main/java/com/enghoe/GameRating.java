@@ -9,17 +9,17 @@ import java.time.LocalDateTime;
  */
 public class GameRating implements Serializable {
 
-    int id;
+    int deviceId;
     int rating;
     String gameTitle;
     //String timeStamp;
 
-    public int getId() {
-        return id;
+    public int getDeviceId() {
+        return deviceId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDeviceId(int deviceId) {
+        this.deviceId = deviceId;
     }
 
     public int getRating() {
